@@ -42,20 +42,16 @@ int particionar (T *v, int i, int p, int f) {
 }
 
 template <typename T>
-void quickSort (T *v, int n) {
-  int i = n, pivot;
-
-  while(i > 0) {
-    i = i/2;
-    pivot = particionar(v, 0, i, n);
-    particionar(v, pivot, (pivot+n)/2, n);
-  }  
-  
+void quickSort (T *v, int n, int i) {
+  if(i <= 0) return;
+  int pivot = particionar(v, 0, i, n);
+  particionar(v, pivot, (pivot+n)/2, n);
+  quickSort(v, n, i/2);
 }
 
 int main() {
-  int valores[] = {3,8,7,10,9,23,2,1,77,7};
-  quickSort(valores, 9);
+  int valores[] = {3,8,7,10,9,9,2,1,9,7};
+  quickSort(valores, 9, 9/2);
 
   for(int i = 0; i < 10; i++) {
     cout << valores[i] << ' ';

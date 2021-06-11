@@ -12,7 +12,7 @@ int particionar (T *v, int i, int p, int f) {
   p = 0;
   while (left <= f && left <= right) {
     if(v[left] >= v[p]) { // setinha esquerda
-      while(v[right] > v[p] && right > left) { // setinha direita
+      while(v[right] >= v[p] && right > left) { // setinha direita
         right--;
       }
       swap(v[left], v[right]); // troca os valores

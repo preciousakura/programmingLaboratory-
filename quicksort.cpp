@@ -38,11 +38,11 @@ void quickSort (T *v, int n) {
 }
 
 int main() {
-  int valores[] = {2,6,6,10,11,23,985,7,2,3,0};
-  quickSort(valores, 7);
+  int v[] = {1,5,4,0,2,3,10,50,55,0,0,850,0};
+  quickSort(v, (sizeof(v)/sizeof(v[0]))-1);
 
-  for(int i = 0; i < 8; i++) {
-    cout << valores[i] << ' ';
+  for(int i = 0; i < sizeof(v)/sizeof(v[0]); i++) {
+    cout << v[i] << ' ';
   }
   return 0;
 }

@@ -33,8 +33,8 @@ void quicksort(T *a, int low, int high)
 }
 
 int main() {
-  int v[] = {100, 200, 300, 400, 0, 500, 1500, 600};
-  quicksort(v, 0, 7);
+  int v[] = {100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600};
+  quicksort(v, 0, (sizeof(v)/sizeof(v[0]))-1);
 
   for(int i = 0; i < sizeof(v)/sizeof(v[0]); i++) {
     cout << v[i] << ' ';

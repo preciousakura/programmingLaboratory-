@@ -5,22 +5,17 @@ using std::swap;
 
 template <typename T>
 int particionar (T *v, int i, int p, int f) {
-  // algoritmo de Hoare 
   int left = i+1;
   int right = f;
-  swap(v[p], v[0]);
-  p = 0;
-  while (left <= f && left <= right) {
-    if(v[left] >= v[p]) { // setinha esquerda
-      while(v[right] >= v[p] && right > left) { // setinha direita
-        right--;
-      }
-      swap(v[left], v[right]); // troca os valores
+  swap(v[p], v[i]);
+  p = i;
+  while (left <= right) {
+    if(v[left] >= v[p]) { 
+      while(v[right] >= v[p] && right > left ) right--;
+      swap(v[left], v[right]); 
       right--;
     } left++;
   } 
-
-  // colocando pivô no lugar correto
   left = i + 1;
   while(v[left] < v[p] && left <= f) {
     left++;
@@ -29,17 +24,17 @@ int particionar (T *v, int i, int p, int f) {
 }
 
 template <typename T>
-void quickSort (T *v, int n) {
-  if(n <= 0) return;
-  int pivot = particionar(v, 0, n/2, n);
-  quickSort(v, pivot);
-  pivot = particionar(v, pivot, (pivot+n)/2, n);
-  quickSort(v, pivot);
+void quicksort(T *a, int low, int high)
+{
+    if (low >= high) return;
+    int pivot = particionar(a, low, (low+high)/2, high);
+    quicksort(a, low, pivot);
+    quicksort(a, pivot + 1, high);
 }
 
 int main() {
-  int v[] = {1,5,4,0,2,3,10,50,55,0,0,850,0};
-  quickSort(v, (sizeof(v)/sizeof(v[0]))-1);
+  int v[] = {100, 200, 300, 400, 0, 500, 1500, 600};
+  quicksort(v, 0, 7);
 
   for(int i = 0; i < sizeof(v)/sizeof(v[0]); i++) {
     cout << v[i] << ' ';

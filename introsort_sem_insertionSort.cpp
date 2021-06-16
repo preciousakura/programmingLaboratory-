@@ -71,7 +71,7 @@ void introSort(T *v, int n){
     p >>= 1;
     i++;
   }
-  p = (2*i)+1;
+  p = (i<<1)+1;
   intro_rec(v, 0, n-1, &p);
 }
 

@@ -51,28 +51,33 @@ int particionar (T *v, int i, int p, int f) {
 }
 
 template <typename T>
-void intro_rec(T *v, int i, int f, int p) {
+void intro_rec(T *v, int i, int f, int *p) {
   if(f <= 1) return;
-  if(p < 1) heapsort(v, f);
+  if(*p < 1) heapsort(v, f);
   else {
+    *p = (*p) - 1;
     if (i >= f) return;
     int pivot = particionar(v, i, (i+f)/2, f);
-    intro_rec(v, i, pivot, p-1);
-    intro_rec(v, pivot + 1, f, p-1);
+    intro_rec(v, i, pivot, p);
+    intro_rec(v, pivot + 1, f, p);
   }
 }
 
 template <typename T>
 void introSort(T *v, int n){
-  int p = 2 * (n>>2);
-  intro_rec(v, 0, n-1, p);
+  int p = n;
+  int i = 0;
+  while(p != 1) {
+    p >>= 1;
+    i++;
+  }
+  p = (2*i)+1;
+  intro_rec(v, 0, n-1, &p);
 }
 
 int main() {
   int v[] = {0,1,2,3,5,4,6,7,8,9,10,11,12,14,13,15,16,17,19,20,21,25,26,27,28,19,20,255,2669,0,40,41,42,43,44,45,46,47,48,49,50};
-
   introSort(v, sizeof(v)/sizeof(v[0]));
-
   for(int i = 0; i < sizeof(v)/sizeof(v[0]); i++) {
     cout << v[i] << ' ';
   }

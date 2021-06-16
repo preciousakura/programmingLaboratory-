@@ -65,7 +65,6 @@ void intro_rec(T *v, int i, int f, int p) {
 template <typename T>
 void introSort(T *v, int n){
   int p = 2 * (n>>2);
-  
   intro_rec(v, 0, n-1, p);
 }
 

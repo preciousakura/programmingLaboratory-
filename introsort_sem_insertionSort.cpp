@@ -37,14 +37,14 @@ int particionar (T *v, int i, int p, int f) {
   swap(v[p], v[i]);
   p = i;
   while (left <= right) {
-    if(v[left] >= v[p]) { 
-      while(v[right] >= v[p] && right > left ) right--;
+    if(v[left] <= v[p]) { 
+      while(v[right] <= v[p] && right > left ) right--;
       swap(v[left], v[right]); 
       right--;
     } left++;
   } 
   left = i + 1;
-  while(v[left] < v[p] && left <= f) {
+  while(v[left] > v[p] && left <= f) {
     left++;
   } swap(v[left-1], v[p]);
   return left - 1;

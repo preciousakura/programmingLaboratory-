@@ -1,10 +1,5 @@
-#include <iostream>
-#include <algorithm>
-using std::cout;
-using std::swap;
-
 template <typename T>
-int particionar (T *v, int i, int p, int f) {
+int particionar_h (T *v, int i, int p, int f) {
   int left = i+1;
   int right = f;
   swap(v[p], v[i]);
@@ -24,20 +19,9 @@ int particionar (T *v, int i, int p, int f) {
 }
 
 template <typename T>
-void quicksort(T *a, int low, int high)
-{
+void quicksort_h(T *a, int low, int high) {
     if (low >= high) return;
-    int pivot = particionar(a, low, (low+high)/2, high);
-    quicksort(a, low, pivot);
-    quicksort(a, pivot + 1, high);
-}
-
-int main() {
-  int v[] = {100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600,100, 200, 300, 400, 0, 500, 1500, 600};
-  quicksort(v, 0, (sizeof(v)/sizeof(v[0]))-1);
-
-  for(int i = 0; i < sizeof(v)/sizeof(v[0]); i++) {
-    cout << v[i] << ' ';
-  }
-  return 0;
+    int pivot = particionar_h(a, low, pivo(low, high), high);
+    quicksort_h(a, low, pivot);
+    quicksort_h(a, pivot + 1, high);
 }

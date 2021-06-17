@@ -252,6 +252,7 @@ void introSort_insertion(T *v, int n){
     p >>= 1;
     i++;
   }
+  p = (i<<1)+1;
   intro_rec_insertion(v, 0, n-1, p, n);
 }
 

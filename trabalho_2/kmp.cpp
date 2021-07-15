@@ -1,57 +1,46 @@
-#include <iostream>
-using std::cout;
-
-int count_str(const char* s, int size) {
+int count_str(const char* s, unsigned int size) { // contar números de caracteres
   if(s[size] == '\0') return size;
   return count_str(s, ++size);
 }
 
-bool alocacao(int size, int* currentArray) {
-  int *newArray = new int[size]; 
-  if(newArray == nullptr) return false;
-  else { for(int i = 0; i < size; i++) newArray[i] = currentArray[i]; }
-  currentArray = newArray;
-  return true;
-}
-
-bool prefix(const char* P, int* O) {
-  int size = count_str(P, 0); // tamanho do padrão
-  if(alocacao(size, O)) {
-    int i = 1, j = 0; 
-    O[0] = 0;
-    while(i < size) {
-      if(P[i] == P[j]) {
-        ++j;
-        O[i] = j;
-        ++i;
-      } else {
-        if(j != 0) j = O[j-1];
-        else { O[i] = 0; ++i; }
-      }
-    } return true;
-  } else return false;
+void prefix(const char* P, int* A, int size) {
+  int i = 1, j = 0; 
+  A[0] = 0;
+  while(i < size) {
+    if(P[i] == P[j]) {
+      ++j;
+      A[i] = j;
+      ++i;
+    } else {
+      if(j != 0) j = A[j-1];
+      else { A[i] = 0; ++i; }
+    }
+  } 
 }
 
 bool kmp(const char *P, const char *T, int *O) {
-  int size_text = count_str(T, 0); // tamanho do texto  
-  int size_p = count_str(P, 0); // tamanho do padrão  
-  int i = 0, j = 0;
-  while(i < size_text) {
-    if(P[j] == T[i]) { ++i; ++j; }
-    if(j == size_p) { j = O[j-1]; }  // padrão encontrado
-    else {
-      if(j < size_p && P[j] != T[i]) {
-        if(j != 0) j = O[j-1];
-        else ++i;
+  int size_p = count_str(P, 0); // tamanho do padrão
+  int *A = new int[size_p]; 
+
+  if(A != nullptr) { 
+    prefix(P, A, size_p); // computa o prefixo  
+    const char *i = T, *j = P;
+
+    while(*i != '\0') {
+      if(*j == *i) { ++i; ++j; }
+
+      if(*j == '\0') { // padrão encontrado
+        *O = (i - T) - (j - P); ++O;
+        j = j = P + A[(j - P) - 1]; 
+      }
+
+      else {
+        if(*j != *i) {
+          if(j - P != 0) j = j = P + A[(j - P) - 1];
+          else ++i;
+        }
       }
     }
-  }
-}
-
-int main() {
-  int *A = new int[1]; 
-  prefix("isabelisa", A);
-  kmp("isabelisa", "isabelisa isabelisaloveamoisabelisa isabel", A);
-  for(int i = 0; i < 9; i++) cout << A[i] << ' ';
-  return 0;
+    delete []A; *O = -1; return true;
+  } else return false;
 }
